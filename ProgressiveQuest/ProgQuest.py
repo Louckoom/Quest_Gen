@@ -20,17 +20,15 @@ niveau_9 = 2
 niveau_10 = 3
 
 print(f"Level Beginner : {difficulty_levels_beginner}")
-print(f"Level Beginner : {difficulty_levels_advanced}")
-print(f"Level Beginner : {difficulty_levels_hard}")
+print(f"Level intermediate : {difficulty_levels_intermediate}")
+print(f"Level advanced : {difficulty_levels_advanced}")
+print(f"Level hard : {difficulty_levels_hard}")
 
 classic_mobs = ["Slimes","Feu folets","Guèpes"]
 advanced_mobs = ["Gobelins", "Loups","Bandits","Demon"]
 mini_boss = ["Chef Gobelin","Mega-Loup","Tireur_Demon"]
 boss = ["Roi Gobelin","Maitre Loup","Chef_Demon"]
 mega_boss = ["Dieu_Demon"]
-
-
-import random
 
 # ... (définition des niveaux de difficulté et des classic_mobs) ...
 
@@ -82,5 +80,5 @@ contenu_html = f"""
 """
 
 # Écrire le contenu dans le fichier HTML
-with open("objectif.html", "w", encoding="utf-8") as f:
+with open("ProgQuest.html", "w", encoding="utf-8") as f:
     f.write(contenu_html)

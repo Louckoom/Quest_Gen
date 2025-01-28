@@ -64,5 +64,5 @@ contenu_html = f"""
 """
 
 # Écrire dans le fichier HTML
-with open("index.html", "w", encoding="utf-8") as f:
+with open("QuestGen_1.html", "w", encoding="utf-8") as f:
   f.write(contenu_html)
