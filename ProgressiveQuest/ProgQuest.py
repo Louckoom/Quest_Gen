@@ -19,6 +19,12 @@ niveau_8 = 1
 niveau_9 = 2
 niveau_10 = 3
 
+mob_level_beginner = list(range(1,13))
+mob_level_intermediate = list(range(13, 29))
+mob_level_advanced = list(range(29, 57))
+mob_level_hard = list(range(57, 82))
+
+
 print(f"Level Beginner : {difficulty_levels_beginner}")
 print(f"Level intermediate : {difficulty_levels_intermediate}")
 print(f"Level advanced : {difficulty_levels_advanced}")
@@ -35,23 +41,27 @@ mega_boss = ["Dieu_Demon"]
 def generer_objectif(difficulte):
     if difficulte in difficulty_levels_beginner:
         nombre_ennemis = niveau_1 or niveau_2 or niveau_3
+        level_mob = random.choice(mob_level_beginner)
         type_ennemi = random.choice(classic_mobs)
     
     elif difficulte in difficulty_levels_intermediate:
-        nombre_ennemis = niveau_4 or niveau_5 
+        nombre_ennemis = niveau_4 or niveau_5
+        level_mob = random.choice(mob_level_intermediate) 
         type_ennemi = random.choice(advanced_mobs)
 
     elif difficulte in difficulty_levels_advanced:
         nombre_ennemis = niveau_6 or niveau_7
+        level_mob = random.choice(mob_level_advanced)
         type_ennemi = random.choice(mini_boss)
     
     elif difficulte in difficulty_levels_hard:
         nombre_ennemis = niveau_8 or niveau_9 or niveau_10
+        level_mob = random.choice(mob_level_hard)
         type_ennemi = random.choice(boss) or mega_boss
     else:
         return "Difficulté non reconnue."
 
-    objectif = f"Éliminer {nombre_ennemis} {type_ennemi}"
+    objectif = f"Éliminer {nombre_ennemis} {type_ennemi} de niveau {level_mob}"
     return objectif
 
 # Choisir une difficulté au hasard
@@ -73,7 +83,7 @@ contenu_html = f"""
     <title>Objectif de quête</title>
 </head>
 <body>
-    <h1>Objectif de niveau = {difficulte_choisie}:</h1>
+    <h1>Objectif de niveau : {difficulte_choisie}:</h1>
     <p>{objectif_final}</p>
 </body>
 </html>
