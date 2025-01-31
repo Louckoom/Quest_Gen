@@ -1,94 +1,93 @@
 import random
 
-for i in range(1, 11):
-    globals()[f"niveau_{i}"] = i
+import random
 
-difficulty_levels_beginner = niveau_1 , niveau_2 , niveau_3
-difficulty_levels_intermediate = niveau_4 , niveau_5
-difficulty_levels_advanced = niveau_6 , niveau_7
-difficulty_levels_hard = niveau_8 , niveau_9 , niveau_10
+# Paramètres de la difficulté
+niveau_base = 2
+facteur_croissance = 1.5
+nombre_de_niveaux = 50
 
-niveau_1 = random.randint(2, 5)
-niveau_2 = random.randint(2, 7)
-niveau_3 = random.randint(4, 10)
-niveau_4 = random.randint(1, 4)
-niveau_5 = random.randint(2, 7)
-niveau_6 = random.randint(1, 5)
-niveau_7 = random.randint(2, 6)
-niveau_8 = 1
-niveau_9 = 2
-niveau_10 = 3
+# Génération des niveaux de difficulté
+niveaux_difficulte = {
+    i: int(niveau_base * facteur_croissance**(i - 1))
+    for i in range(1, nombre_de_niveaux + 1)
+}
 
-mob_level_beginner = list(range(1,13))
-mob_level_intermediate = list(range(13, 29))
-mob_level_advanced = list(range(29, 57))
-mob_level_hard = list(range(57, 82))
+# Niveaux de monstres
+niveaux_monstres = {
+    "beginner": list(range(1, 13)),
+    "intermediate": list(range(13, 21)),
+    "advanced": list(range(21, 43)),
+    "hard": list(range(43, 51)),
+}
 
+# Types d'ennemis
+types_ennemis = {
+    "beginner": ["Slimes", "Feu folets", "Guêpes"],
+    "intermediate": ["Gobelins", "Loups", "Bandits", "Demon"],
+    "advanced": ["Chef Gobelin", "Mega-Loup", "Tireur_Demon"],
+    "hard": ["Roi Gobelin", "Maitre Loup", "Chef_Demon", "Dieu_Demon"],
+}
 
-print(f"Level Beginner : {difficulty_levels_beginner}")
-print(f"Level intermediate : {difficulty_levels_intermediate}")
-print(f"Level advanced : {difficulty_levels_advanced}")
-print(f"Level hard : {difficulty_levels_hard}")
+def generer_objectif():
+    niveau = random.randint(1, nombre_de_niveaux)
+    difficulte = niveaux_difficulte[niveau]
 
-classic_mobs = ["Slimes","Feu folets","Guèpes"]
-advanced_mobs = ["Gobelins", "Loups","Bandits","Demon"]
-mini_boss = ["Chef Gobelin","Mega-Loup","Tireur_Demon"]
-boss = ["Roi Gobelin","Maitre Loup","Chef_Demon"]
-mega_boss = ["Dieu_Demon"]
-
-# ... (définition des niveaux de difficulté et des classic_mobs) ...
-
-def generer_objectif(difficulte):
-    if difficulte in difficulty_levels_beginner:
-        nombre_ennemis = niveau_1 or niveau_2 or niveau_3
-        level_mob = random.choice(mob_level_beginner)
-        type_ennemi = random.choice(classic_mobs)
-    
-    elif difficulte in difficulty_levels_intermediate:
-        nombre_ennemis = niveau_4 or niveau_5
-        level_mob = random.choice(mob_level_intermediate) 
-        type_ennemi = random.choice(advanced_mobs)
-
-    elif difficulte in difficulty_levels_advanced:
-        nombre_ennemis = niveau_6 or niveau_7
-        level_mob = random.choice(mob_level_advanced)
-        type_ennemi = random.choice(mini_boss)
-    
-    elif difficulte in difficulty_levels_hard:
-        nombre_ennemis = niveau_8 or niveau_9 or niveau_10
-        level_mob = random.choice(mob_level_hard)
-        type_ennemi = random.choice(boss) or mega_boss
+    if niveau <= 10:
+        niveau_monstre = "beginner"
+    elif niveau <= 20:
+        niveau_monstre = "intermediate"
+    elif niveau <= 30: # Ajout d'une condition pour les niveaux advanced
+        niveau_monstre = "advanced"
     else:
-        return "Difficulté non reconnue."
+        niveau_monstre = "hard"
 
-    objectif = f"Éliminer {nombre_ennemis} {type_ennemi} de niveau {level_mob}"
-    return objectif
+    nombre_ennemis = random.randint(1, 10)  # Ajuster les plages si nécessaire
+    level_mob = random.choice(niveaux_monstres[niveau_monstre])
+    type_ennemi = random.choice(types_ennemis[niveau_monstre])
 
-# Choisir une difficulté au hasard
-difficultes = [niveau_1, niveau_2, niveau_3, niveau_4, niveau_5, niveau_6, niveau_7, niveau_8, niveau_9, niveau_10]
-difficulte_choisie = random.choice(difficultes)
-print(difficulte_choisie)
+    objectif = f"Éliminer {nombre_ennemis} {type_ennemi} de niveau {level_mob}."
+    return objectif , niveau_monstre
 
-# Générer l'objectif en fournissant la difficulté
-objectif_final = generer_objectif(difficulte_choisie)  # Ajouter l'argument difficulte_choisie
+# Génération et affichage de l'objectif
+objectif_final, niveau_monstre = generer_objectif()
+print(objectif_final, niveau_monstre)
 
-# Afficher l'objectif
-print(objectif_final)
+# ... (génération de l'objectif)
 
-# Créer le contenu HTML
+# Création du contenu HTML
 contenu_html = f"""
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Objectif de quête</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProgQuest - Objectif de Quête</title>
+    <style>
+        body {{
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }}
+        h1 {{
+            color: #333;
+        }}
+        p {{
+            font-size: 1.2em;
+        }}
+    </style>
 </head>
 <body>
-    <h1>Objectif de niveau : {difficulte_choisie}:</h1>
+    <h1>Objectif de niveau : {niveau_monstre}</h1>
     <p>{objectif_final}</p>
 </body>
 </html>
 """
 
-# Écrire le contenu dans le fichier HTML
-with open("ProgQuest.html", "w", encoding="utf-8") as f:
-    f.write(contenu_html)
+# Écriture du contenu dans le fichier HTML
+try:
+    with open("ProgQuest.html", "w", encoding="utf-8") as f:
+        f.write(contenu_html)
+    print("Fichier ProgQuest.html créé avec succès.")
+except Exception as e:
+    print(f"Erreur lors de la création du fichier HTML : {e}")
