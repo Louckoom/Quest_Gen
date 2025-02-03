@@ -1,6 +1,6 @@
 import random
 
-# Paramètres de la difficulté
+# Paramètres de la difficulté monstres
 niveau_base = 2
 facteur_croissance = 1.5
 nombre_de_niveaux = 50
@@ -27,6 +27,8 @@ types_ennemis = {
     "hard": ["Roi Gobelin", "Maitre Loup", "Chef_Demon", "Dieu_Demon"],
 }
 
+
+# Fonction qui défini le niveau des monstres en fonction du niveau du joueur actuel
 def choisir_niveau_monstre(niveau_joueur):
     """Détermine le niveau de monstre en fonction du niveau du joueur."""
     if niveau_joueur <= 10:
@@ -71,14 +73,14 @@ def progression_circulaire(niveau_joueur_actuel, niveau_joueur_max):
         objectif = generer_objectif(niveau_joueur_actuel)
         html = creer_html(objectif, niveau_joueur_actuel, reponse_precedente)
 
-        with open("ProgQuest.html", "w", encoding="utf-8") as f:
+        with open("ProgQuest_1_0.html", "w", encoding="utf-8") as f:
             f.write(html)
         
         reponse = input("Voulez-vous continuer? (oui/non): ")
 
         # Afficher la réponse dans le HTML avant de passer au niveau suivant
         html = creer_html(objectif, niveau_joueur_actuel, reponse)
-        with open("ProgQuest.html", "w", encoding="utf-8") as f:
+        with open("ProgQuest_1_0.html", "w", encoding="utf-8") as f:
             f.write(html)
         
         if reponse.lower() != "oui":
@@ -110,4 +112,27 @@ def progression_circulaire(niveau_joueur_actuel, niveau_joueur_max):
 niveau_joueur_actuel = 1
 
 # Lancement de la progression
-progression_circulaire(niveau_joueur_actuel, 10)
+progression_circulaire(niveau_joueur_actuel, 50)
+
+
+#Fonction pour dire si une quête est réussi ou échoué
+
+def quest_result():
+    quest = input("Voulez-vous infliger des dégats? (oui/non): ")
+    if quest.lower() == "oui":
+        quest_result = True
+        print('Quest Accomplished')
+        print(quest_result)
+
+    elif quest.lower() == "non":
+        quest_result = False
+        print('Quest Failed')
+        print(quest_result)
+
+    else:
+        print(f"Vous avez décider de répondre par autre chose que 'oui' ou 'non' donc vous avez échoué la quêtes, s'il y a des régles c'est pour les respecter !")
+        quest_result = False
+        print('Quest Failed')
+        print(quest_result)
+
+quest_result()
